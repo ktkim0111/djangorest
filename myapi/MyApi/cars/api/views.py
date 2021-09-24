@@ -1,3 +1,4 @@
+from firstApp.api.serializer import CarSpecsSerializer
 from cars.models import Cars
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -36,5 +37,39 @@ class CarsAPIView(APIView):
         new_car.save()
 
         serializer = CarsSerializer(new_car)
+
+        return Response(serializer.data)
+
+    def put(self, request, *args, **kwargs):
+        car_object = Cars.objects.get()
+
+        data = request.data
+
+        car_object.car_brand = data["car_brand"]
+        car_object.car_model = data["car_model"]
+        car_object.production_year = data["production_year"]
+        car_object.car_body = data["car_body"]
+        car_object.engine_type = data["engine_type"]
+
+        car_object.save()
+
+        serializer = CarsSerializer(car_object)
+
+        return Response(serializer.data)
+
+    def patch(self, request, *args, **kwargs):
+        car_object = Cars.objects.get()
+        data = request.data
+
+        car_object.car_brand = data.get("car_brand", car_object.car_brand)
+        car_object.car_model = data.get("car_model", car_object.car_model)
+        car_object.production_year = data.get(
+            "production_year", car_object.production_year)
+        car_object.car_body = data.get("car_body", car_object.car_body)
+        car_object.engine_type = data.get(
+            "engine_type", car_object.engine_type)
+
+        car_object.save()
+        serializer = CarsSerializer(car_object)
 
         return Response(serializer.data)

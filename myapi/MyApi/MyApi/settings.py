@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'cars',
     'posts',
     'userapp',
+    'school',
+    'racing',
 ]
 
 SITE_ID = 1
@@ -127,7 +129,8 @@ REST_FRAMEWORK = {
     # Permission
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
     # Custom Users
     'USER_DETAILS_SERIALIZER': 'userapp.serializer.UserDetailsSerializer',
